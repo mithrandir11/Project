@@ -4,7 +4,6 @@ const isLoading = ref(false)
 const {data:user} = await useFetch('/api/profile/info', {
     headers: useRequestHeaders(['cookie'])
 })
-// console.log(user.value)
 
 async function handleEdit(form) {
     isLoading.value = true
@@ -31,7 +30,7 @@ async function handleEdit(form) {
 
         <FormKit type="form" @submit="handleEdit" :actions="false" :incomplete-message="false" >
 
-            <div  class="space-y-4 md:space-y-6" >
+            <div  class="space-y-4 md:space-y-6 max-w-lg" >
                 <FormKit type="text" name="name" id="name" label="نام و نام‌خانوادگی" 
                 label-class="block mb-2 text-sm font-medium text-gray-900 " 
                 input-class="border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"

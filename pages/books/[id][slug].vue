@@ -4,7 +4,7 @@ import { useCartStore } from '~/store/cart';
 const route = useRoute();
 const { public:{apiBase} } = useRuntimeConfig();
 
-const {data:book, refresh} = await useFetch(()=> `${apiBase}/books/findById/${route.params.id}`, {
+const {data:book} = await useFetch(()=> `${apiBase}/books/findById/${route.params.id}`, {
     params:{include_details:true}
 })
 
@@ -27,9 +27,9 @@ const countCartItems = computed(()=> cart.count)
 
 
 <template>
-    <div class="divide-y ">
+    <div class=" ">
 
-        <nav class="flex    py-8" aria-label="Breadcrumb">
+        <nav class="flex py-8" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
                 <li class="inline-flex items-center">
                     <NuxtLink :to="{name:'home'}" class="inline-flex items-center text-xs lg:text-sm font-medium text-gray-700 hover:text-primary-600 ">
@@ -41,7 +41,7 @@ const countCartItems = computed(()=> cart.count)
                         <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                         </svg>
-                        <NuxtLink  class="ms-1 text-xs lg:text-sm font-medium text-gray-700 hover:text-primary-600 md:ms-2 ">کتاب ها</NuxtLink>
+                        <NuxtLink :to="{name: 'books'}"  class="ms-1 text-xs lg:text-sm font-medium text-gray-700 hover:text-primary-600 md:ms-2 ">کتاب ها</NuxtLink>
                     </div>
                 </li>
                 <li>
@@ -183,6 +183,7 @@ const countCartItems = computed(()=> cart.count)
         <div class="py-8">
             <h4 class="font-bold lg:text-xl mb-3">نظرات کاربران</h4>
             <!-- <Comment :comments="book.data.comments" :book_id="book.data.id"/> -->
+            <Comment :comments="book.data.comments" commentableType="book" :commentableId="book.data.id"/>
         </div>
 
     </div>

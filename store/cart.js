@@ -17,6 +17,12 @@ export const useCartStore = defineStore('cart', {
         qtyOfItem(state){
             return (itemId) => state.cart.find((item) => item.id === itemId)?.qty || 0
         },
+
+        totalAmount(state){
+            return state.cart.reduce((total, product) => {
+                return total + (product.price * product.qty)    
+            }, 0)
+        }
     },
 
     actions: {
@@ -59,6 +65,10 @@ export const useCartStore = defineStore('cart', {
 
             console.log(this.cart)
         },
+
+        clear() {
+            this.cart = [];
+        }
 
         // remove(id){
         //     this.cart = this.cart.filter(p => p.id != id)

@@ -5,20 +5,20 @@ const showModal = ref(false)
 
 <template>
     <!-- Modal toggle -->
-    <button @click="showModal = true" type="button">
+    <button @click="showModal = true" type="button" class="text-primary-700">
         (نمایش)
     </button>
 
     <!-- Main modal -->
     <div v-if="showModal" class="relative z-10" aria-labelledby="modal-title" role="dialog" aria-modal="true">
 
-        <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
+        <div class="fixed inset-0 bg-black bg-opacity-10 transition-opacity" aria-hidden="true"></div>
 
-        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div class="fixed inset-0 z-10 w-screen ">
             <div class="flex min-h-full items-end justify-center p-4  sm:items-center sm:p-0">
             
             <div class="relative transform overflow-hidden rounded-lg bg-white  shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-2xl">
-                <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4 max-h-screen overflow-y-auto">
 
                     <div class="flex items-center justify-between py-2 border-b rounded-t">
                         <!-- <h3 class="text-xl font-semibold text-gray-900 ">
@@ -42,17 +42,17 @@ const showModal = ref(false)
                                     </NuxtLink>
 
                                     
-                                    <div class="flex items-center justify-between md:order-3 ">
+                                    <div class="flex items-center justify-between md:order-3 w-full">
 
-                                        <div class="w-full min-w-0 flex-1 space-y-4  md:max-w-md">
-                                            <NuxtLink  class="text-sm lg:text-base font-medium text-gray-900 hover:underline ">{{ product.book.title }}</NuxtLink>
+                                        <div class="w-full min-w-0 flex-1 space-y-4  md:max-w-md ">
+                                            <NuxtLink :to="{name: 'showBook', params:{id: product.book.id, slug: product.book.slug}}" class="text-sm lg:text-base font-medium text-gray-900 hover:underline ">{{ product.book.title }}</NuxtLink>
                                         </div>
             
                                         <div class="text-end  md:w-32">
                                             <p class=" font-bold text-gray-900 ">{{ product.price }} تومان </p>
                                         </div>
 
-                                        <div class="text-end  md:w-32">
+                                        <div class="text-end  md:w-24">
                                             <p>{{ product.quantity }} عدد </p>
                                         </div>
                                         

@@ -19,6 +19,12 @@ export default {
       meta:{ layout: false, middleware: 'guest'}
     },
     {
+      name: 'register',
+      path: '/register',
+      component: () => import('~/pages/auth/register.vue'),
+      meta:{ layout: false, middleware: 'guest'}
+    },
+    {
       name: 'profile',
       path: '/profile',
       component: () => import('~/pages/profile/index.vue'),
@@ -37,6 +43,11 @@ export default {
       meta:{ layout: 'profile', middleware: 'auth'}
     },
     {
+      name: 'books',
+      path: '/books',
+      component: () => import('~/pages/books/index.vue')
+    },
+    {
       name: 'showBook',
       path: '/books/:id/:slug',
       component: () => import('~/pages/books/[id][slug].vue')
@@ -46,6 +57,12 @@ export default {
       path: '/cart',
       component: () => import('~/pages/purchase/cart.vue'),
       meta:{ middleware: 'auth'}
+    },
+    {
+      name: 'verify',
+      path: '/payment/verify',
+      component: () => import('~/pages/payment/verify.vue'),
+      meta:{layout: false, middleware: 'auth'}
     },
   ],
 } satisfies RouterConfig

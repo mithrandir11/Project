@@ -1,4 +1,5 @@
 <script setup>
+const props = defineProps(['coupon'])
 const code = ref('')
 const isLoading = ref(false)
 
@@ -11,13 +12,18 @@ async function checkCoupon(){
     isLoading.value = true
 
     try {
-        await $fetch('/api/profile/info/edit',{
+        const data = await $fetch('/api/cart/checkCoupon',{
             method: 'POST',
-            body: form
+            body: {code: code.value}
         })
-        push.success('اطلاعات شما با موفقیت بروزرسانی شد')
+        push.success('کد تخفیف با موفقیت اعمال شد')
+        
+        props.coupon.code = code.value
+        props.coupon.percent = data.discount_percentage
+        // console.log(data)
     } catch (error) {
-        console.log(error.data.data.message)
+        push.error(error.data.data.message)
+        // console.log(error.data.data.message)
         
     }finally{
         isLoading.value = false
@@ -29,7 +35,7 @@ async function checkCoupon(){
         <div class="space-y-4">
             <div>
                 <label for="voucher" class="mb-2 block text-sm font-medium text-gray-900 ">آیا کد تخفیف یا کارت هدیه دارید؟</label>
-                <input v-model.lazy="code" type="text" id="voucher" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500    " placeholder="" required />
+                <input v-model="code" type="text" id="voucher" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500    " placeholder="" required />
                 
             </div>
 

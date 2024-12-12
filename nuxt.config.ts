@@ -42,6 +42,7 @@ export default defineNuxtConfig({
   runtimeConfig:{
     public: {
       apiBase: "http://localhost:8000/api"
+      // apiBase: "https://book-store-api.chbk.app/api"
     }
   },
   postcss: {
@@ -49,5 +50,19 @@ export default defineNuxtConfig({
       tailwindcss: {},
       autoprefixer: {},
     },
+  },
+
+
+
+
+
+  // nitro: {
+  //   preset: 'node-server', // استفاده از preset مناسب
+  //   compressPublicAssets: true, // فشرده‌سازی فایل‌های عمومی
+  // },
+  routeRules: {
+    // "/": { prerender: true },
+    "/books": { swr: true },
+    "/books/**": { isr: true },
   },
 })

@@ -83,5 +83,5 @@ function paginate(number){
 
     </div>
 
-    <div v-else class=" w-full text-center text-xl pt-12">محصولی یافت نشد!</div>
+    <div v-else class=" w-full text-gray-600 text-center text-xl pt-12">موردی یافت نشد!</div>
 </template>

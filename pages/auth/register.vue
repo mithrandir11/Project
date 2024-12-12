@@ -4,10 +4,11 @@ import { useAuthStore } from '~/store/auth';
 const isLoading = ref(false)
 const auth = useAuthStore();
 
-async function handleLogin(form) {
+async function handleRegister(form) {
+    // console.log(form)
     isLoading.value = true
     try {
-        auth.login(form)
+        auth.register(form)
     } catch (error) {
         console.log(error.data.data.message)
     }finally{
@@ -29,11 +30,27 @@ async function handleLogin(form) {
             <div class="  w-full sm:max-w-md p-3  ">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
-                        ورود به حساب کاربری
+                        ساخت حساب کاربری
                     </h1>
 
-                    <FormKit type="form" @submit="handleLogin" :actions="false" :incomplete-message="false">
+                    <FormKit type="form" @submit="handleRegister" :actions="false" :incomplete-message="false">
                         <div class="space-y-4 md:space-y-6">
+
+                            <FormKit type="text" name="name" id="name" label="نام" 
+                            label-class="block mb-2 text-sm font-medium text-gray-900 " 
+                            input-class="border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            validation="required"
+                            :validation-messages="{required: 'فیلد نام الزامی است'}"
+                            messages-class="text-red-500 text-sm"
+                            />
+
+                            <FormKit type="number" name="cellphone" id="cellphone" label="شماره موبایل" 
+                            label-class="block mb-2 text-sm font-medium text-gray-900 " 
+                            input-class="border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            validation="required|number"
+                            :validation-messages="{required: 'فیلد شماره موبایل الزامی است', number: 'فیلد شماره موبایل باید عددی باشد'}"
+                            messages-class="text-red-500 text-sm"
+                            />
 
                             <FormKit type="email" name="email" id="email" label="ایمیل" 
                             label-class="block mb-2 text-sm font-medium text-gray-900 " 
@@ -47,18 +64,26 @@ async function handleLogin(form) {
                             label-class="block mb-2 text-sm font-medium text-gray-900 " 
                             input-class="border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                             validation="required"
-                            :validation-messages="{required: 'فیلد ایمیل الزامی است'}"
+                            :validation-messages="{required: 'فیلد رمز عبور الزامی است'}"
+                            messages-class="text-red-500 text-sm"
+                            />
+
+                            <FormKit type="password" name="password_confirm" id="password_confirm" label="تکرار رمز عبور" 
+                            label-class="block mb-2 text-sm font-medium text-gray-900 " 
+                            input-class="border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                            validation="required|confirm"
+                            :validation-messages="{required: 'فیلد تکرار رمز عبور الزامی است', confirm: 'فیلد تکرار رمز عبور مطابقت ندارد'}"
                             messages-class="text-red-500 text-sm"
                             />
 
 
                             <FormKit type="submit" input-class="flex w-full items-center justify-center text-white bg-primary-600 hover:bg-primary-700 duration-200 rounded-lg text-sm px-5 py-2.5 text-center ">
                                 <UtilsLoading v-if="isLoading" class="ml-3"/>
-                                ورود
+                                ساخت حساب
                             </FormKit>
 
                             <p class="text-sm font-light text-gray-500 ">
-                                هنوز ثبت نام نکرده اید؟ <NuxtLink :to="{name: 'register'}" class="font-medium text-primary-600 hover:underline ">ساخت حساب</NuxtLink>
+                                از قبل حساب کاربری دارید؟ <NuxtLink :to="{name:'login'}" class="font-medium text-primary-600 hover:underline ">وارد</NuxtLink> شوید
                             </p>
 
                         </div>

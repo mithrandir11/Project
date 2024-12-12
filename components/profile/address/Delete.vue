@@ -3,7 +3,7 @@ const props = defineProps(['address_id','refresh'])
 const isLoading = ref(false)
 
 async function handleDelete() {
-    console.log(props.address_id)
+    // console.log(props.address_id)
     isLoading.value = true
 
     try {

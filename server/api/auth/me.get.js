@@ -2,6 +2,9 @@ export default defineEventHandler(async (event) => {
     const { public: { apiBase } } = useRuntimeConfig();
     const token = getCookie(event, 'token')
 
+    // const auth = getCookie(event, 'auth')
+    // return console.log(auth)
+
     try {
         const data = await $fetch(`${apiBase}/currentUser`, {
             method: 'GET',

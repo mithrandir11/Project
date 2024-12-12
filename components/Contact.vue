@@ -30,12 +30,12 @@ async function submit(){
 </script>
 
 <template>
-    <div class="grid grid-cols-2"> 
+    <div class="grid grid-cols-2 gap-x-8"> 
 
-        <h2 class="col-span-full mb-4 text-4xl tracking-tight font-extrabold  text-gray-900 ">تماس با ما</h2>
+        <h2 class="col-span-full text-primary-950  font-bold lg:text-xl mb-3 ">تماس با ما</h2>
 
         <section>
-            <div class=" px-4 mx-auto max-w-screen-md">
+            <div class="  mx-auto max-w-screen-md">
                
                 <!-- <p class="mb-8 lg:mb-16 font-light text-center text-gray-500  sm:text-xl">Got a technical issue? Want to send feedback about a beta feature? Need details about our Business plan? Let us know.</p> -->
                 
@@ -44,7 +44,7 @@ async function submit(){
                         <li v-for="error in errors">{{ error }}</li>
                     </ul>
                 </div>
-                <form @submit.prevent="submit" class="space-y-8">
+                <form @submit.prevent="submit" class="space-y-6">
                     <div>
                         <!-- <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">ایمیل</label> -->
                         <input v-model="form.email" type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 " placeholder="ایمیل شما" >

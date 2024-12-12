@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <footer class="bg-primary-900 bg-opacity-20 w-full  p-10 grid lg:grid-cols-3 gap-y-4 gap-x-16 rounded-t-2xl">
+    
+        <footer class="bg-primary-900 bg-opacity-20 w-full  p-10 grid lg:grid-cols-3 gap-y-4 gap-x-16 rounded-t-lg">
             
             <div class="text-primary-950 justify-self-center">
                 <h3 class="text-xl font-bold mb-2">درباره ما</h3>
@@ -24,5 +24,5 @@
             </div>
 
         </footer>
-    </div>
+    
 </template>

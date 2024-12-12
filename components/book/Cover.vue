@@ -17,7 +17,7 @@ const props = defineProps(['book'])
 
         <div class="text-center  px-3 ">
             <NuxtLink :to="{name: 'showBook', params:{id: props.book.id, slug: props.book.slug}}"  class="line-show-1 mt-1 text-xs lg:text-base text-primary-950 font-bold ">{{ props.book.title }}</NuxtLink>
-            <p class="text-primary-700 font-bold  text-sm lg:text-base">{{ numberFormat(props.book.price) }} تومان</p>
+            <p class="text-primary-700 font-bold  text-sm ">{{ numberFormat(props.book.price) }} تومان</p>
         </div>
     </div>
 

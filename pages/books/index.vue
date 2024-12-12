@@ -1,13 +1,12 @@
 <script setup>
-const {id} = useRoute().params
-// const page = ref(0)
+// const {id} = useRoute().params
 const router = useRouter()
 const route = useRoute()
 const query = ref({})
 const { public:{apiBase} } = useRuntimeConfig();
 
 query.value = route.query
-const {data:books, refresh} = await useFetch(()=> `${apiBase}/books/findByCategoryId/${id}`, {
+const {data:books, refresh} = await useFetch(()=> `${apiBase}/books`, {
     query: query
 })
 
@@ -55,7 +54,7 @@ function removeFilter(paramKey) {
                         <button @click="removeFilter('publisher_id')" type="button" class="text-primary-950 text-xs">حذف فیلتر</button>
                     </div>
 
-                    <div class="space-y-2 mt-3 text-primary-950 h-64 overflow-y-auto">
+                    <div class="space-y-2 mt-3 text-primary-950 h-64 overflow-y-auto ">
                         <div v-for="publisher in publishers.data" class="flex items-center gap-x-2">
                             <input @click="handleFilter({publisher_id: publisher.id})" :id="publisher.id" name="publisher" type="radio">
                             <label class="text-sm" :for="publisher.id">{{ publisher.name }}</label>
@@ -95,9 +94,7 @@ function removeFilter(paramKey) {
                 <BookFilterAuthor @update-author="handleAuthorChange"/>
             </template>
         </div> -->
-
         <div  class="col-span-5 lg:col-span-4 ">
-
             <template v-if="books.data.length != 0">
                 <!-- <div class="lg:pb-4 flex justify-between  mb-1 ">
                     <span class="hidden lg:block text-gray-700 font-bold text-xl">مرتب سازی بر اساس :</span>
@@ -108,8 +105,6 @@ function removeFilter(paramKey) {
                         <button @click="handleFilter({sort_by: 'most_expensive'})" class="btn-custom-2 text-sm grow">گران ترین</button>
                     </div>
                 </div> -->
-
-            
                 <div class=" grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4  justify-center gap-3 lg:gap-4 mt-6 ">
                     <BookCover v-for="book in books.data" :key="book.id" :book="book"/>
                 </div>
@@ -121,22 +116,11 @@ function removeFilter(paramKey) {
                 </div>
             </template>
 
-            
-
             <div v-else>
                 <div>
                     <h3 class="text-center mt-24 text-lg font-bold">محصولی یافت نشد</h3>
                 </div>
             </div>
-
-
-           
-            
-
-            <!-- <div v-if="totalPages > 1" class="flex  justify-center items-center gap-x-1 lg:gap-x-2 mt-10 lg:mt-16 ">
-                <LazyUtilsPagination  :totalPages="totalPages" :currentPage="currentPage" :sortBy="sortBy" />
-            </div> -->
-
         </div>
 
     </div>

@@ -1,14 +1,29 @@
-export default defineNuxtPlugin(async (nuxtApp) => {
-    const { authUser } = useAuth();
+import { useAuthStore } from "~/store/auth";
 
+export default defineNuxtPlugin(async (nuxtApp) => {
+    // const { authUser } = useAuth();
+
+    // try {
+    //     const user = await $fetch('/api/auth/me', {
+    //         method: 'GET',
+    //         headers: useRequestHeaders(['cookie'])
+    //     })
+
+    //     authUser.value = user;
+    // } catch (error) {
+    //     authUser.value = null;
+    // }
+
+
+    const auth = useAuthStore();
     try {
-        const user = await $fetch('/api/auth/me', {
+        const data = await $fetch('/api/auth/me', {
             method: 'GET',
             headers: useRequestHeaders(['cookie'])
         })
-
-        authUser.value = user;
+        auth.user= data.user;
     } catch (error) {
-        authUser.value = null;
-    }
+        auth.user= null;
+        auth.token= null;
+    } 
 })

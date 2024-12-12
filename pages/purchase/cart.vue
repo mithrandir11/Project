@@ -4,7 +4,15 @@ import { useCartStore } from '~/store/cart';
 const cart = useCartStore();
 const countCartItems = computed(()=> cart.count)
 const cartItems = computed(()=> cart.allItems)
-// console.log(cartItems.value)
+const totalAmount = computed(()=> cart.totalAmount)
+const coupon = reactive({
+    code: '',
+    percent: 0,
+})
+const selectedAddressId = ref(null)
+
+const {data: addresses} = await useFetch('/api/profile/addresses')
+// console.log(selectedAddressId.value)
 </script>
 <template>
     <ClientOnly>
@@ -43,7 +51,7 @@ const cartItems = computed(()=> cart.allItems)
                                             </button>
                                         </div>
                                         <div class="text-end md:order-4 md:w-32">
-                                            <p class=" font-bold text-gray-900 ">{{ product.price }} تومان </p>
+                                            <p class=" font-bold text-gray-900 ">{{ numberFormat(product.price) }} تومان </p>
                                         </div>
                                     </div>
 
@@ -71,6 +79,30 @@ const cartItems = computed(()=> cart.allItems)
 
                         </div>
 
+
+                        <h2 class="lg:text-xl font-semibold text-gray-900 mt-24">انتخاب آدرس <NuxtLink :to="{name: 'profile.addresses'}" class="text-primary-700 font-bold mt-3  text-sm underline underline-offset-4"> ( ایجاد آدرس جدید )</NuxtLink></h2>
+                        <div class="mt-6">
+                            <select v-if="addresses?.length > 0" v-model="selectedAddressId" id="countries" class="border text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 ">
+                                <option :value="null">انتخاب آدرس</option>
+                                <option v-for="address in addresses" :key="address.id" :value="address.id">{{ address.full_address }}</option>
+                            </select>
+
+                            <div v-else >
+                                <p>شما در حال حاضر آدرس ثبت شده ای ندارید </p>
+                            </div>
+                            
+
+                            
+                        </div>
+
+
+
+
+                       <CartPayment :coupon="coupon" :addressId="selectedAddressId" :cart="cartItems"/>
+                        
+
+
+
                     
                     </div>
 
@@ -78,45 +110,47 @@ const cartItems = computed(()=> cart.allItems)
                         <div class="space-y-4 rounded-lg border  bg-white p-4 shadow-sm  sm:p-6">
                             <p class="lg:text-xl font-semibold text-gray-900 text-center">خلاصه سفارش</p>
 
-                            <!-- <div class="space-y-4">
+                            <div class="space-y-4">
                                 <div class="space-y-2">
                                     <dl class="flex items-center justify-between gap-4">
-                                        <dt class="text-base font-normal text-gray-500 ">قیمت اصلی</dt>
-                                        <dd class="text-base font-medium text-gray-900 ">{{ originalPrice }} تومان</dd>
+                                        <dt class="text-base font-normal text-gray-500 ">قیمت کل</dt>
+                                        <dd class="text-base font-medium text-gray-900 ">{{ numberFormat(totalAmount) }} تومان</dd>
                                     </dl>
 
-                                    <dl v-if="discountPrice" class="flex items-center justify-between gap-4">
-                                        <dt class="text-base font-normal text-gray-500 ">تخفیف</dt>
-                                        <dd class="text-base font-medium text-green-600">{{ discountPrice }}- تومان</dd>
+                                    <!-- {{ coupon }} -->
+
+                                    <dl v-if="coupon.code" class="flex items-center justify-between gap-4">
+                                        <dt class="text-base font-normal text-gray-500 ">تخفیف {{ coupon.percent }}%</dt>
+                                        <dd class="text-base font-medium text-green-600">{{ numberFormat((totalAmount * coupon.percent)/100) }}- تومان</dd>
                                     </dl>
 
                                     <dl class="flex items-center justify-between gap-4">
                                         <dt class="text-base font-normal text-gray-500 ">هزینه ارسال</dt>
-                                        <dd class="text-base font-medium text-gray-900 ">{{ shippingCost }} تومان</dd>
+                                        <dd class="text-base font-medium text-gray-900 ">رایگان</dd>
                                     </dl>
 
                                 </div>
 
                                 <dl class="flex items-center justify-between gap-4 border-t  pt-2 ">
-                                <dt class="text-base font-bold text-gray-900 ">قیمت کل</dt>
-                                <dd class="text-base font-bold text-gray-900 ">{{ totalPrice }} تومان</dd>
+                                <dt class="text-base font-bold text-gray-900 ">قیمت پرداختی</dt>
+                                <dd class="text-base font-bold text-gray-900 ">{{ totalAmount - ((totalAmount * coupon.percent)/100) }} تومان</dd>
                                 </dl>
-                            </div> -->
+                            </div>
 
                         
                             <!-- <NuxtLink :to="{name: 'shipping'}"  class="flex w-full items-center justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none ">مرحله بعدی</NuxtLink> -->
                         </div>
 
                         
-                        <CartDiscountForm/>
+                        <CartDiscountForm :coupon="coupon" />
 
                     </div>
 
                 </div>
 
-                <div v-else class="max-w-md mx-auto text-center">
+                <div v-else class="max-w-md mx-auto text-center ">
                     <p class="mt-8 border rounded-lg p-6 w-full text-lg text-center">سبد خرید شما خالی میباشد!</p>
-                    <NuxtLink  class="mt-6 inline-flex items-center gap-2 text-sm font-medium   ">
+                    <NuxtLink :to="{name: 'books'}" class="mt-6 inline-flex items-center gap-2 text-sm font-medium   ">
                         مشاهده محصولات
                         <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 12H5m14 0-4 4m4-4-4-4" />
